@@ -12,9 +12,8 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// TODO: Define Routes
-// app.use('/api/users', require('./routes/userRoutes'));
-// app.use('/api/projects', require('./routes/projectRoutes'));
+// Routes
+app.use('/', require('./routes/user'));
 
 // TODO: Add Error Handling Middleware
 

@@ -55,6 +55,8 @@ The application follows a decoupled client-server architecture:
     - Update `MONGODB_URI` if necessary.
 4.  Start the server:
     ```bash
+    npm start
+    # or for development with auto-restart:
     npm run dev
     ```
 
@@ -69,6 +71,8 @@ The application follows a decoupled client-server architecture:
     ```
 3.  Start the development server:
     ```bash
+    npm start
+    # or
     npm run dev
     ```
 
