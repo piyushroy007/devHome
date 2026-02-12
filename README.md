@@ -15,6 +15,9 @@ devHome/
 ├── backend/            # Node.js + Express Backend
 │   ├── src/            # Source code
 │   │   ├── config/     # Configuration files (Database, etc.)
+│   │   ├── models/     # Mongoose schemas/models
+│   │   ├── routes/     # API route handlers
+│   │   ├── utils/      # Helper functions (Validation, etc.)
 │   │   ├── app.js      # Express app setup
 │   │   └── server.js   # Server entry point
 │   └── .env.example    # Environment variables template
@@ -27,8 +30,10 @@ devHome/
 The application follows a decoupled client-server architecture:
 
 1.  **Frontend (React + Vite)**: Handles the user interface, routing, and user interactions. It communicates with the backend via HTTP requests.
-2.  **Backend (Node.js + Express)**: Serves as the REST API, handling business logic, authentication, and data processing.
-3.  **Database (MongoDB)**: Stores user profiles, matches, projects, and chat history.
+2.  - **Backend (Node.js + Express)**: Serves as the REST API, handling business logic, authentication, and data processing.
+
+- **Validation**: Centralized API-level validation using a dedicated `utils/validation.js` helper and the `validator` library.
+- **Database (MongoDB)**: Stores user profiles, matches, projects, and chat history.
 
 ### Communication Flow
 

@@ -1,10 +1,17 @@
 const express = require("express");
 const User = require("../models/user");
+const {
+    validateSignupData,
+    validateEditProfileData,
+} = require("../utils/validation");
 const router = express.Router();
 
 // POST /signup - Create or register a new user
 router.post("/signup", async (req, res) => {
     try {
+        // Validation of data
+        validateSignupData(req);
+
         const user = new User(req.body);
         await user.save();
         res.status(201).json({ message: "User registered successfully", user });
@@ -45,16 +52,22 @@ router.get("/feed", async (req, res) => {
     }
 });
 
+// POST /user - Create a user (Generic Create)
+router.post("/user", async (req, res) => {
+    try {
+        validateSignupData(req);
+        const user = new User(req.body);
+        await user.save();
+        res.status(201).json({ message: "User created successfully", user });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 // PATCH /user/:userId - Update user partially
 router.patch("/user/:userId", async (req, res) => {
     try {
-        const ALLOWED_UPDATES = ["firstname", "lastname", "gender"];
-        const updates = Object.keys(req.body);
-        const isUpdateAllowed = updates.every((update) =>
-            ALLOWED_UPDATES.includes(update),
-        );
-
-        if (!isUpdateAllowed) {
+        if (!validateEditProfileData(req)) {
             return res
                 .status(400)
                 .json({ error: "Update not allowed for some fields" });
@@ -76,13 +89,7 @@ router.patch("/user/:userId", async (req, res) => {
 // PUT /user/:userId - Update user fully
 router.put("/user/:userId", async (req, res) => {
     try {
-        const ALLOWED_UPDATES = ["firstname", "lastname", "gender"];
-        const updates = Object.keys(req.body);
-        const isUpdateAllowed = updates.every((update) =>
-            ALLOWED_UPDATES.includes(update),
-        );
-
-        if (!isUpdateAllowed) {
+        if (!validateEditProfileData(req)) {
             return res
                 .status(400)
                 .json({ error: "Update not allowed for some fields" });
