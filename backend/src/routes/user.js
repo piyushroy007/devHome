@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const {
     validateSignupData,
@@ -12,9 +13,47 @@ router.post("/signup", async (req, res) => {
         // Validation of data
         validateSignupData(req);
 
-        const user = new User(req.body);
+        const { firstname, lastname, emailid, password, age, gender } =
+            req.body;
+
+        // Encrypt the password
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        const user = new User({
+            firstname,
+            lastname,
+            emailid,
+            password: passwordHash,
+            age,
+            gender,
+        });
+
         await user.save();
         res.status(201).json({ message: "User registered successfully", user });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// POST /login - Login user
+router.post("/login", async (req, res) => {
+    try {
+        const { emailid, password } = req.body;
+
+        // 1. Find user by email
+        const user = await User.findOne({ emailid });
+        if (!user) {
+            throw new Error("Invalid credentials");
+        }
+
+        // 2. Compare passwords
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            throw new Error("Invalid credentials");
+        }
+
+        // 3. Login success
+        res.json({ message: "Login successful", user });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -56,7 +95,22 @@ router.get("/feed", async (req, res) => {
 router.post("/user", async (req, res) => {
     try {
         validateSignupData(req);
-        const user = new User(req.body);
+
+        const { firstname, lastname, emailid, password, age, gender } =
+            req.body;
+
+        // Encrypt the password
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        const user = new User({
+            firstname,
+            lastname,
+            emailid,
+            password: passwordHash,
+            age,
+            gender,
+        });
+
         await user.save();
         res.status(201).json({ message: "User created successfully", user });
     } catch (error) {

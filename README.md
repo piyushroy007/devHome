@@ -33,6 +33,7 @@ The application follows a decoupled client-server architecture:
 2.  - **Backend (Node.js + Express)**: Serves as the REST API, handling business logic, authentication, and data processing.
 
 - **Validation**: Centralized API-level validation using a dedicated `utils/validation.js` helper and the `validator` library.
+- **Security**: Password encryption using `bcrypt` with salted hashing before database storage.
 - **Database (MongoDB)**: Stores user profiles, matches, projects, and chat history.
 
 ### Communication Flow
@@ -52,6 +53,7 @@ The application follows a decoupled client-server architecture:
         - `password`: Required, must be a strong password (min 8 chars, including uppercase, lowercase, numbers, and symbols).
         - `age`: Optional, must be at least 18.
         - `gender`: Optional, must be 'male', 'female', or 'others'.
+- **POST `/login`**: Authenticate a user with `emailid` and `password`.
 - **GET `/user`**: Fetch a user by their email ID (e.g., `/user?emailid=example@test.com`).
 - **GET `/feed`**: Retrieve all users from the database.
 - **POST `/user`**: Generic endpoint to create a new user (same validation as `/signup`).
