@@ -48,6 +48,18 @@ router.get("/feed", async (req, res) => {
 // PATCH /user/:userId - Update user partially
 router.patch("/user/:userId", async (req, res) => {
     try {
+        const ALLOWED_UPDATES = ["firstname", "lastname", "gender"];
+        const updates = Object.keys(req.body);
+        const isUpdateAllowed = updates.every((update) =>
+            ALLOWED_UPDATES.includes(update),
+        );
+
+        if (!isUpdateAllowed) {
+            return res
+                .status(400)
+                .json({ error: "Update not allowed for some fields" });
+        }
+
         const user = await User.findByIdAndUpdate(req.params.userId, req.body, {
             new: true,
             runValidators: true,
@@ -61,12 +73,21 @@ router.patch("/user/:userId", async (req, res) => {
     }
 });
 
-// PUT /user/:userId - Update user fully (usually same as PATCH in Mongoose unless we explicitly replace)
+// PUT /user/:userId - Update user fully
 router.put("/user/:userId", async (req, res) => {
     try {
-        // Note: In a strict PUT, we might want to overwrite fields.
-        // findByIdAndUpdate does a patch-like update by default (only fields in body are updated).
-        // To strictly replace, we'd need to handle that, but for this use case, standard update is likely expected.
+        const ALLOWED_UPDATES = ["firstname", "lastname", "gender"];
+        const updates = Object.keys(req.body);
+        const isUpdateAllowed = updates.every((update) =>
+            ALLOWED_UPDATES.includes(update),
+        );
+
+        if (!isUpdateAllowed) {
+            return res
+                .status(400)
+                .json({ error: "Update not allowed for some fields" });
+        }
+
         const user = await User.findByIdAndUpdate(req.params.userId, req.body, {
             new: true,
             runValidators: true,

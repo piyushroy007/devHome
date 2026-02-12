@@ -31,17 +31,40 @@ The application follows a decoupled client-server architecture:
 3.  **Database (MongoDB)**: Stores user profiles, matches, projects, and chat history.
 
 ### Communication Flow
+
 - The **Frontend** sends HTTP requests (GET, POST, PUT, DELETE) to the **Backend** API endpoints.
 - The **Backend** processes these requests, interacts with **MongoDB**, and returns JSON responses.
 - **CORS** is enabled on the backend to allow requests from the frontend development server.
 
-## 🚀 Getting Started
+## � API Endpoints
+
+### User Management
+
+- **POST `/signup`**: Register a new user.
+    - _Validation_:
+        - `firstname`: Required, min 2 chars, max 50 chars.
+        - `emailid`: Required, must be a valid email format.
+        - `password`: Required, must be a strong password (min 8 chars, including uppercase, lowercase, numbers, and symbols).
+        - `age`: Optional, must be at least 18.
+        - `gender`: Optional, must be 'male', 'female', or 'others'.
+- **GET `/user`**: Fetch a user by their email ID (e.g., `/user?emailid=example@test.com`).
+- **GET `/feed`**: Retrieve all users from the database.
+- **POST `/user`**: Generic endpoint to create a new user (same validation as `/signup`).
+- **PATCH `/user/:userId`**: Partially update user details.
+    - _Validation_: Only `firstname`, `lastname`, and `gender` are allowed for updates. Other fields will trigger an error. Same field-level constraints apply.
+- **PUT `/user/:userId`**: Fully update user details.
+    - _Validation_: Restricted to `firstname`, `lastname`, and `gender` fields only. Same field-level constraints apply.
+- **DELETE `/user/:userId`**: Remove a user from the system by their ID.
+
+## �🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (v14+ recommended)
 - MongoDB (Local or Atlas)
 
 ### Backend Setup
+
 1.  Navigate to the backend directory:
     ```bash
     cd backend
@@ -61,6 +84,7 @@ The application follows a decoupled client-server architecture:
     ```
 
 ### Frontend Setup
+
 1.  Navigate to the frontend directory:
     ```bash
     cd frontend
@@ -78,7 +102,7 @@ The application follows a decoupled client-server architecture:
 
 ## 💡 Future Feature Ideas
 
--   **Swipe Matching Logic**: Implement the core "swipe right" algorithm to match developers based on skills and interests.
--   **Real-time Chat**: Use Socket.io to enable real-time messaging between matched developers.
--   **Skill-based Matchmaking**: Advanced filtering and matching based on tech stack (e.g., React, Python, Rust).
--   **Project Collaboration Spaces**: Shared workspaces for matched developers to brainstorm and manage projects.
+- **Swipe Matching Logic**: Implement the core "swipe right" algorithm to match developers based on skills and interests.
+- **Real-time Chat**: Use Socket.io to enable real-time messaging between matched developers.
+- **Skill-based Matchmaking**: Advanced filtering and matching based on tech stack (e.g., React, Python, Rust).
+- **Project Collaboration Spaces**: Shared workspaces for matched developers to brainstorm and manage projects.
