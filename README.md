@@ -15,11 +15,13 @@ devHome/
 ├── backend/            # Node.js + Express Backend
 │   ├── src/            # Source code
 │   │   ├── config/     # Configuration files (Database, etc.)
+│   │   ├── middlewares/# Express middlewares (Auth, etc.)
 │   │   ├── models/     # Mongoose schemas/models
 │   │   ├── routes/     # API route handlers
 │   │   ├── utils/      # Helper functions (Validation, etc.)
 │   │   ├── app.js      # Express app setup
 │   │   └── server.js   # Server entry point
+│   ├── .env            # Environment variables (Local only)
 │   └── .env.example    # Environment variables template
 │
 └── README.md           # Project Documentation
@@ -42,7 +44,7 @@ The application follows a decoupled client-server architecture:
 - The **Backend** processes these requests, interacts with **MongoDB**, and returns JSON responses.
 - **CORS** is enabled on the backend to allow requests from the frontend development server.
 
-## � API Endpoints
+## 🚀 API Endpoints
 
 ### User Management
 
@@ -64,7 +66,7 @@ The application follows a decoupled client-server architecture:
     - _Validation_: Restricted to `firstname`, `lastname`, and `gender` fields only. Same field-level constraints apply.
 - **DELETE `/user/:userId`**: Remove a user from the system by their ID.
 
-## �🚀 Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
