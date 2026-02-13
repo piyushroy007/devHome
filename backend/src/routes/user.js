@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const {
     validateSignupData,
@@ -52,10 +53,49 @@ router.post("/login", async (req, res) => {
             throw new Error("Invalid credentials");
         }
 
-        // 3. Login success
+        // 3. Create a JWT Token
+        const token = await jwt.sign(
+            { _id: user._id },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "7d",
+            },
+        );
+
+        // 4. Add the token to cookie and send the response back to user
+        res.cookie("token", token, {
+            expires: new Date(Date.now() + 8 * 3600000), // cookie expires in 8 hours
+            httpOnly: true,
+        });
+
         res.json({ message: "Login successful", user });
     } catch (error) {
         res.status(400).json({ error: error.message });
+    }
+});
+
+// GET /profile - Get profile of the logged in user
+router.get("/profile", async (req, res) => {
+    try {
+        const cookies = req.cookies;
+        const { token } = cookies;
+
+        if (!token) {
+            throw new Error("Invalid Token");
+        }
+
+        // Verify the token
+        const decodedMessage = await jwt.verify(token, process.env.JWT_SECRET);
+        const { _id } = decodedMessage;
+
+        const user = await User.findById(_id);
+        if (!user) {
+            throw new Error("User does not exist");
+        }
+
+        res.send(user);
+    } catch (error) {
+        res.status(400).send("ERROR: " + error.message);
     }
 });
 
