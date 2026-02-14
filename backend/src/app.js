@@ -18,10 +18,12 @@ app.get("/", (req, res) => {
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/request");
 
 app.use("/", authRouter);
 app.use("/", userRouter);
 app.use("/", profileRouter);
+app.use("/", requestRouter);
 
 // TODO: Add Error Handling Middleware
 

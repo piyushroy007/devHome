@@ -120,4 +120,6 @@ userSchema.methods.validatePassword = async function (passwordInputByUser) {
     return isPasswordValid;
 };
 
+userSchema.index({ emailid: 1 }, { unique: true });
+
 module.exports = mongoose.model("User", userSchema);
