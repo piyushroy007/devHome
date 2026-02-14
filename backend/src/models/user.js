@@ -12,6 +12,49 @@ const userSchema = new mongoose.Schema(
             minLength: 2,
             maxLength: 50,
         },
+        photourl: {
+            type: String,
+            trim: true,
+            validate(value) {
+                if (
+                    value &&
+                    !validator.isURL(value, {
+                        protocols: ["http", "https"],
+                        require_protocol: true,
+                    })
+                ) {
+                    throw new Error("Invalid photo URL");
+                }
+            },
+        },
+        about: {
+            type: String,
+            trim: true,
+            maxLength: 500,
+        },
+        skill: {
+            type: [String],
+            default: [],
+            validate(value) {
+                if (!Array.isArray(value)) {
+                    throw new Error("Skill must be an array");
+                }
+                if (value.length > 20) {
+                    throw new Error("Skill cannot have more than 20 entries");
+                }
+                for (const s of value) {
+                    if (
+                        typeof s !== "string" ||
+                        s.trim().length === 0 ||
+                        s.length > 30
+                    ) {
+                        throw new Error(
+                            "Each skill must be a non-empty string up to 30 chars",
+                        );
+                    }
+                }
+            },
+        },
         lastname: {
             type: String,
             trim: true,
