@@ -38,6 +38,12 @@ The application follows a decoupled client-server architecture:
 - **Security**: Password encryption using `bcrypt` and session management using **JWT** tokens stored in **HTTP-only cookies**.
 - **Database (MongoDB)**: Stores user profiles, matches, projects, and chat history.
 
+### Routing Structure
+
+- **routes/auth.js**: Authentication routes — `/signup`, `/login`, `/logout`. Handles JWT issuance and cookie management.
+- **routes/profile.js**: Profile routes — protected `/profile` using the `userAuth` middleware.
+- **routes/user.js**: User CRUD and listing — `/user` (create, get by email, update, delete) and `/feed`.
+
 ### Communication Flow
 
 - The **Frontend** sends HTTP requests (GET, POST, PUT, DELETE) to the **Backend** API endpoints.
@@ -56,6 +62,7 @@ The application follows a decoupled client-server architecture:
         - `age`: Optional, must be at least 18.
         - `gender`: Optional, must be 'male', 'female', or 'others'.
 - **POST `/login`**: Authenticate a user with `emailid` and `password`. Returns a JWT token in a cookie named `token`.
+- **POST `/logout`**: Log out the current user by clearing the `token` cookie.
 - **GET `/profile`**: Retrieve the profile of the currently logged-in user. Requires the `token` cookie to be present.
 - **GET `/user`**: Fetch a user by their email ID (e.g., `/user?emailid=example@test.com`).
 - **GET `/feed`**: Retrieve all users from the database.
