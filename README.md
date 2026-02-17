@@ -42,8 +42,8 @@ The application follows a decoupled client-server architecture:
 
 - **routes/auth.js**: Authentication routes — `/signup`, `/login`, `/logout`. Handles JWT issuance and cookie management.
 - **routes/profile.js**: Profile routes — protected `/profile` using the `userAuth` middleware.
-- **routes/user.js**: User CRUD and listing — `/user` (create, get by email, update, delete) and `/feed`.
-- **routes/request.js**: Connection requests — `/request/send/inerested/:userid` to send a pending request.
+- **routes/user.js**: User routes — `/user` (create, get by email, update, delete), `/feed`, `/user/requests`.
+- **routes/request.js**: Connection requests — `/request/send/:status/:userid` and `/request/review/:status/:userid`.
 
 ### Communication Flow
 
@@ -73,7 +73,9 @@ The application follows a decoupled client-server architecture:
 - **PUT `/user/:userId`**: Fully update user details.
     - _Validation_: Restricted to `firstname`, `lastname`, and `gender` fields only. Same field-level constraints apply.
 - **DELETE `/user/:userId`**: Remove a user from the system by their ID.
-- **POST `/request/send/inerested/:userid`**: Send a connection request to the specified user. Requires auth; creates a pending request.
+- **POST `/request/send/:status/:userid`**: Send a connection request with a specific status (e.g. `interested`, `ignored`). Requires auth.
+- **POST `/request/review/:status/:userid`**: Review an incoming connection request as `accepted`, `rejected`, or `ignored`. Requires auth.
+- **GET `/user/requests`**: List all connection requests sent to the logged-in user.
 
 ## 🚀 Getting Started
 
