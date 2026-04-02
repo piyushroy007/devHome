@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:5000/api/auth";
 
 const Login = () => {
     const [email, setEmail] = useState("piyush@gmail.com");
@@ -14,11 +14,23 @@ const Login = () => {
             return;
         }
         console.log(email, password);
-        const response = await axios.post("http://localhost:5000/login", {
-            email,
-            password,
-        });
-        console.log(response.data);
+        try {
+            const response = await axios.post(
+                API_URL + "/login",
+                {
+                    emailid: email,
+                    password,
+                },
+                {
+                    withCredentials: true,
+                },
+            );
+            console.log(response.data);
+            alert("Login successful!");
+        } catch (err) {
+            console.error(err);
+            alert(err?.response?.data?.error || "Login failed");
+        }
     };
 
     return (
@@ -55,13 +67,6 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             className="input input-bordered w-full"
                         />
-                        <label className="label">
-                            <a
-                                href="#"
-                                className="label-text-alt link link-hover">
-                                Forgot password?
-                            </a>
-                        </label>
                     </div>
 
                     {/* Login Button */}
