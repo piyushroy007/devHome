@@ -1,10 +1,38 @@
-import React from "react";
+import axios from "axios";
+import { BASE_URL, API_URLS } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { removeUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
     const user = useSelector((state) => state.user);
-    console.log("User in NavBar:", user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    console.log("User in NavBar:", user?.firstname);
+
+    const handleLogout = async () => {
+        // Implement logout functionality here
+        console.log("Logout clicked");
+        try {
+            const response = await axios.post(
+                BASE_URL + API_URLS.LOGOUT,
+                {},
+                { withCredentials: true },
+            );
+            if (response.status === 200) {
+                // Clear user data from Redux store
+                dispatch(removeUser());
+                // Redirect to login page
+                navigate("/login");
+            } else {
+                console.error("Failed to logout");
+            }
+        } catch (error) {
+            console.error("Error during logout:", error);
+        }
+    };
 
     return (
         <div className="navbar bg-base-300 px-5">
@@ -43,7 +71,7 @@ const NavBar = () => {
                                 <a>Settings</a>
                             </li>
                             <li>
-                                <a>Logout</a>
+                                <a onClick={handleLogout}>Logout</a>
                             </li>
                         </ul>
                     </div>
