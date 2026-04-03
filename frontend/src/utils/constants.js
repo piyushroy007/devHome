@@ -5,4 +5,6 @@ export const API_URLS = {
     REGISTER: "auth/register",
     LOGOUT: "auth/logout",
     USER: "user",
+    PROFILE_VIEW: "profile/view",
+    PROFILE_EDIT: "profile/edit",
 };

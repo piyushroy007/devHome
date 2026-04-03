@@ -6,8 +6,9 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const router = express.Router();
 
-router.get("/profile/view", userAuth, async (req, res) => {
+router.get("/view", userAuth, async (req, res) => {
     try {
+        console.log("From profile/view GET");
         const user = req.user;
         res.send(user);
     } catch (error) {
@@ -15,7 +16,7 @@ router.get("/profile/view", userAuth, async (req, res) => {
     }
 });
 
-router.patch("/profile/edit", userAuth, async (req, res) => {
+router.patch("/edit", userAuth, async (req, res) => {
     try {
         if (!validateEditProfileData(req)) {
             return res
@@ -37,7 +38,7 @@ router.patch("/profile/edit", userAuth, async (req, res) => {
 
 module.exports = router;
 
-router.post("/profile/password", userAuth, async (req, res) => {
+router.post("/password", userAuth, async (req, res) => {
     try {
         const { oldPassword, newPassword } = req.body;
         if (!oldPassword || !newPassword) {
