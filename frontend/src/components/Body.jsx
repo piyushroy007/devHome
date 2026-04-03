@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import NavBar from "./NavBar";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL, API_URLS } from "../utils/constants";
@@ -11,6 +11,9 @@ import { useNavigate } from "react-router-dom";
 const Body = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const userData = useSelector((state) => state.user);
+    console.log("User data in Body component:", userData);
+
     const fetchUser = async () => {
         try {
             const response = await axios.get(BASE_URL + API_URLS.PROFILE_VIEW, {
@@ -33,8 +36,10 @@ const Body = () => {
     };
 
     useEffect(() => {
-        fetchUser();
-    }, []);
+        if (!userData) {
+            fetchUser();
+        }
+    }, [userData]);
 
     return (
         <>
