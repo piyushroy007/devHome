@@ -48,6 +48,7 @@ authRouter.post("/signup", async (req, res) => {
 authRouter.post("/login", async (req, res) => {
     try {
         const { emailid, password } = req.body;
+        console.log("req.body from /login POST", req.body);
 
         // 1. Find user by email
         const user = await User.findOne({ emailid });
@@ -78,6 +79,7 @@ authRouter.post("/login", async (req, res) => {
 
 // POST /logout - Logout user
 authRouter.post("/logout", async (req, res) => {
+    console.log("From /logout POST");
     res.cookie("token", null, {
         expires: new Date(Date.now()),
         httpOnly: true,
