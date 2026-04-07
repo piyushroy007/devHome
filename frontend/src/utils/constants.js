@@ -7,4 +7,5 @@ export const API_URLS = {
     USER: "user",
     PROFILE_VIEW: "profile/view",
     PROFILE_EDIT: "profile/edit",
+    FEED: "feed",
 };

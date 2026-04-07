@@ -9,7 +9,7 @@ const getAllowedStatuses = () => {
     return (path.options && path.options.enum) || path.enumValues || [];
 };
 
-router.post("/request/send/:status/:userid", userAuth, async (req, res) => {
+router.post("/send/:status/:userid", userAuth, async (req, res) => {
     try {
         const toUserId = req.params.userid;
         const statusParam = (req.params.status || "").toLowerCase();
@@ -59,7 +59,7 @@ router.post("/request/send/:status/:userid", userAuth, async (req, res) => {
     }
 });
 
-router.post("/request/review/:status/:userid", userAuth, async (req, res) => {
+router.post("/review/:status/:userid", userAuth, async (req, res) => {
     try {
         const fromUserId = req.params.userid;
         const statusParam = (req.params.status || "").toLowerCase();

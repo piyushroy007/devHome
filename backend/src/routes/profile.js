@@ -36,8 +36,6 @@ router.patch("/edit", userAuth, async (req, res) => {
     }
 });
 
-module.exports = router;
-
 router.post("/password", userAuth, async (req, res) => {
     try {
         const { oldPassword, newPassword } = req.body;
@@ -64,3 +62,5 @@ router.post("/password", userAuth, async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
+module.exports = router;

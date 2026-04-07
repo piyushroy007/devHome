@@ -8,13 +8,14 @@ import { BASE_URL, API_URLS } from "../utils/constants";
 const Login = () => {
     const [email, setEmail] = useState("piyush@gmail.com");
     const [password, setPassword] = useState("Piyush@123");
+    const [error, setError] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!email || !password) {
-            alert("Please enter email and password");
+            setError("Please enter email and password");
             return;
         }
         console.log(email, password);
@@ -33,7 +34,8 @@ const Login = () => {
             dispatch(addUser(response.data.user));
             navigate("/");
         } catch (err) {
-            console.error(err);
+            console.error("Error during login:", err);
+            setError("Invalid email or password");
         }
     };
 
@@ -72,7 +74,7 @@ const Login = () => {
                             className="input input-bordered w-full"
                         />
                     </div>
-
+                    <p className="text-red-500 mt-2">{error}</p>
                     {/* Login Button */}
                     <div className="form-control mt-6">
                         <button
