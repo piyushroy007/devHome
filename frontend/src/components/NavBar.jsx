@@ -5,6 +5,7 @@ import { removeUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { DEFAULT_PHOTOURL } from "../utils/constants";
 
 const NavBar = () => {
     const user = useSelector((state) => state.user);
@@ -51,10 +52,7 @@ const NavBar = () => {
                             <div className="w-10 rounded-full">
                                 <img
                                     alt="Tailwind CSS Navbar component"
-                                    src={
-                                        user.photoUrl ||
-                                        "https://static.vecteezy.com/system/resources/thumbnails/005/544/770/small/profile-icon-design-free-vector.jpg"
-                                    }
+                                    src={user.photoUrl || DEFAULT_PHOTOURL}
                                 />
                             </div>
                         </div>

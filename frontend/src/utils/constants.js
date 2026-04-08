@@ -7,5 +7,8 @@ export const API_URLS = {
     USER: "user",
     PROFILE_VIEW: "profile/view",
     PROFILE_EDIT: "profile/edit",
-    FEED: "feed",
+    FEED: "user/feed",
 };
+
+export const DEFAULT_PHOTOURL =
+    "https://static.vecteezy.com/system/resources/thumbnails/005/544/770/small/profile-icon-design-free-vector.jpg ";
