@@ -6,7 +6,7 @@ export const API_URLS = {
     LOGOUT: "auth/logout",
     USER: "user",
     PROFILE_VIEW: "profile/view",
-    PROFILE_EDIT: "profile/edit",
+    USER_EDIT: "user/editUserInfo",
     FEED: "user/feed",
 };
 

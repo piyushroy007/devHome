@@ -17,9 +17,10 @@ const UserCard = ({ user }) => {
                 </div>
             </figure>
             <div className="card-body gap-3">
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between">
                     <h2 className="card-title text-2xl font-bold">
-                        {user?.firstname} {user?.lastname}
+                        {String(user?.firstname).toUpperCase()}{" "}
+                        {String(user?.lastname).toUpperCase()}
                     </h2>
                     {user?.age && (
                         <span className="text-xl font-medium opacity-70">
@@ -28,7 +29,7 @@ const UserCard = ({ user }) => {
                     )}
                 </div>
 
-                <div className="h-20 overflow-hidden">
+                <div className="h-auto overflow-hidden">
                     <p className="text-base-content/80 text-sm line-clamp-3">
                         {user?.about || "No bio available."}
                     </p>
