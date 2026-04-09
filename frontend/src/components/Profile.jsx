@@ -6,6 +6,14 @@ import EditProfileModal from "./EditProfileModal";
 const Profile = () => {
     const user = useSelector((state) => state.user);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+
+    const triggerToast = () => {
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
+    };
 
     if (!user) {
         return (
@@ -17,6 +25,13 @@ const Profile = () => {
 
     return (
         <div className="min-h-screen bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
+            {showToast && (
+                <div className="toast toast-top toast-center z-50">
+                    <div className="alert alert-success">
+                        <span>Profile Updated successfully.</span>
+                    </div>
+                </div>
+            )}
             <div className="max-w-4xl mx-auto">
                 <div className="card lg:card-side bg-base-100 shadow-2xl overflow-hidden border border-base-content/10">
                     {/* Profile Image Section */}
@@ -166,6 +181,7 @@ const Profile = () => {
                 <EditProfileModal
                     user={user}
                     onClose={() => setIsEditModalOpen(false)}
+                    triggerToast={triggerToast}
                 />
             )}
         </div>

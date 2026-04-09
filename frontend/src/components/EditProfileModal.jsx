@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL, API_URLS } from "../utils/constants";
 
-const EditProfileModal = ({ user, onClose }) => {
+const EditProfileModal = ({ user, onClose, triggerToast }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         firstname: user?.firstname || "",
@@ -48,6 +48,7 @@ const EditProfileModal = ({ user, onClose }) => {
 
             if (response.status === 200) {
                 dispatch(addUser(response.data.user));
+                triggerToast();
                 onClose();
             }
         } catch (err) {
